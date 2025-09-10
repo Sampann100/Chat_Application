@@ -1,6 +1,10 @@
 const express = require("express");
 
-const { SignUp, sendOtp, verifyOtp } = require("../controller/authentication/Signup");
+const {
+  SignUp,
+  sendOtp,
+  verifyOtp,
+} = require("../controller/authentication/Signup");
 const { Login } = require("../controller/authentication/Login");
 const { Logout } = require("../controller/authentication/Logout");
 const { me, authentication } = require("../middleware/Authentiation");

@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { ChakraProvider } from "@chakra-ui/react";
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import chat_app_store from "../store/index.js";
 import { HelmetProvider } from "react-helmet-async";
@@ -12,11 +11,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={chat_app_store}>
       <HelmetProvider>
-        <BrowserRouter>
           <ChakraProvider>
             <App />
           </ChakraProvider>
-        </BrowserRouter>
       </HelmetProvider>
     </Provider>
   </StrictMode>

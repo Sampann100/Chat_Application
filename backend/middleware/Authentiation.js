@@ -1,6 +1,7 @@
 exports.authentication = async (req, res, next) => {
   try {
     const userInfo = req.session.userInfo;
+
     if (!userInfo) {
       return res
         .status(401)

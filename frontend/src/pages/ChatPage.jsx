@@ -9,7 +9,7 @@ import { URL } from "../../config";
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const currentUser = JSON.parse(localStorage.getItem("userData")) || {};
+  const currentUser = useSelector((state) => state.userData.user) || {};
   const chatList = useSelector((state) => state.chatList);
 
   const [selectedChat, setSelectedChat] = useState(null);

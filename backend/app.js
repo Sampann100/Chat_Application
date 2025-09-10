@@ -90,7 +90,7 @@ io.on("connect", (socket) => {
 
     io.to(selectedChatRoom).emit("receive-message", { message });
   });
-  
+
   socket.on("disconnect", () => {
     console.log("User disconnected: ", socket.id);
   });

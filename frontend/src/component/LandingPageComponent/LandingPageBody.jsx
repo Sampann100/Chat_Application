@@ -14,7 +14,7 @@ import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 
 function LandingPageBody() {
-  const userData = useSelector((state) => state.userData?.user?.userInfo) || {};
+  const userData = useSelector((state) => state.userData.user) || {};
 
   return (
     <Box

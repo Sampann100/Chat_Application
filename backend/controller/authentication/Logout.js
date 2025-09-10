@@ -11,9 +11,9 @@ exports.Logout = async (req, res, next) => {
             .json({ success: false, message: "Failed to logout" });
         }
 
-        res.clearCookie("connect.sid");
+        res.clearCookie("connect.sid", { path: "/" });
         return res
-          .status(201)
+          .status(200)
           .json({ success: true, message: "User is Logged out" });
       });
     } else {

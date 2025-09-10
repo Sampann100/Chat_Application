@@ -19,7 +19,6 @@ import { HamburgerIcon, CloseIcon, EmailIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { URL } from "../../../config";
 import axios from "axios";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userDataActions } from "../../../store/userDataSlice";
 
@@ -50,27 +49,8 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // from redux
   const { user, success } = useSelector((state) => state.userData);
   const isLoggedIn = success;
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get(`${URL}/api/auth/me`, {
-          withCredentials: true,
-        });
-        console.log(res.data);
-        if (res.status === 200) {
-          dispatch(userDataActions.setUserData(res.data));
-        } else {
-          dispatch(userDataActions.removeUserData());
-        }
-      } catch {
-        dispatch(userDataActions.removeUserData());
-      }
-    })();
-  }, [dispatch]);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -80,6 +60,7 @@ export default function Navbar() {
         {},
         { withCredentials: true }
       );
+
       if (res.data.success) {
         dispatch(userDataActions.removeUserData());
       }
