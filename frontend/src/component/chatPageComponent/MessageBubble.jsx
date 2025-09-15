@@ -18,7 +18,6 @@ function MessageBubble({ message, isOwnMessage, sender, showAvatar }) {
         align="flex-end"
         gap={2}
       >
-
         {!isOwnMessage && showAvatar && (
           <Avatar
             size="sm"
@@ -29,14 +28,11 @@ function MessageBubble({ message, isOwnMessage, sender, showAvatar }) {
         )}
 
         <VStack align={isOwnMessage ? "flex-end" : "flex-start"} spacing={1}>
-          {/* Show sender name only in group chat (and only once per sequence) */}
           {!isOwnMessage && showAvatar && message.chat?.isGroupChat && (
             <Text fontSize="xs" fontWeight="semibold" color="teal.400">
               {sender?.username}
             </Text>
           )}
-
-          {/* Message bubble */}
           <MotionBox
             bg={isOwnMessage ? "teal.500" : "gray.700"}
             color="white"
@@ -54,7 +50,6 @@ function MessageBubble({ message, isOwnMessage, sender, showAvatar }) {
             </Text>
           </MotionBox>
 
-          {/* Timestamp */}
           {showAvatar && (
             <Text
               fontSize="xs"

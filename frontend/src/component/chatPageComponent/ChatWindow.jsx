@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Flex,
   Text,
@@ -19,6 +19,8 @@ import { URL } from "../../../config";
 import MessageBubble from "./MessageBubble";
 import { useDispatch, useSelector } from "react-redux";
 import { socket } from "../../socket";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
 
 function ChatWindow({ isMobile, onBack, selectedChat, currentUser }) {
   const dispatch = useDispatch();
@@ -26,7 +28,21 @@ function ChatWindow({ isMobile, onBack, selectedChat, currentUser }) {
   const currentUserId = currentUser?._id || currentUser?.id;
 
   const [sendMessage, setSendMessage] = useState("");
+  const [showEmoji, setShowEmoji] = useState(false);
   const scrollRef = useRef();
+
+  const pickerRef = useRef(null);
+
+  // Close emoji picker on outside click
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (pickerRef.current && !pickerRef.current.contains(e.target)) {
+        setShowEmoji(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // --- Connect to Socket.IO and join room ---
   useEffect(() => {
@@ -100,16 +116,6 @@ function ChatWindow({ isMobile, onBack, selectedChat, currentUser }) {
     if (!sendMessage.trim()) return;
 
     try {
-      // const res = await axios.post(
-      //   `${URL}/api/message/`,
-      //   { senderMessage: sendMessage, selectedChatRoom: selectedChat._id },
-      //   { withCredentials: true }
-      // );
-      // if (res.status === 200) {
-      //   dispatch(messengerActions.addNewMessage(res.data));
-      //   setSendMessage("");
-      // }
-
       const messageData = {
         senderMessage: sendMessage,
         selectedChatRoom: selectedChat._id,
@@ -253,13 +259,22 @@ function ChatWindow({ isMobile, onBack, selectedChat, currentUser }) {
         zIndex={10}
       >
         <HStack spacing={3}>
-
           <IconButton
             icon={<AttachmentIcon />}
             aria-label="Attach File"
             variant="ghost"
             color="white"
             _hover={{ bg: "#4A5568" }}
+          />
+          <IconButton
+            aria-label="Emoji"
+            bg="transparent"
+            icon={<FaSmile color="white" />}
+            size="sm"
+            _hover={{ bg: "transparent" }}
+            _active={{ bg: "transparent" }}
+            _focus={{ boxShadow: "none" }}
+            onClick={() => setShowEmoji((prev) => !prev)}
           />
           <Input
             placeholder="Type a message..."
@@ -287,6 +302,26 @@ function ChatWindow({ isMobile, onBack, selectedChat, currentUser }) {
             size="md"
             onClick={(e) => handleSendMessage(e)}
           />
+
+          {showEmoji && (
+            <div
+              ref={pickerRef}
+              style={{
+                position: "absolute",
+                bottom: "60px",
+                left: "10px",
+                zIndex: 1000,
+              }}
+            >
+              <Picker
+                data={data}
+                onEmojiSelect={(emoji) =>
+                  setSendMessage((prev) => prev + emoji.native)
+                }
+                theme="dark"
+              />
+            </div>
+          )}
         </HStack>
       </Box>
     </Flex>

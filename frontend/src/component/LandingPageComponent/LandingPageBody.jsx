@@ -36,7 +36,6 @@ function LandingPageBody() {
         />
       </Helmet>
 
-      {/* Background glowing circles */}
       <Box
         position="absolute"
         top="50%"
@@ -64,16 +63,14 @@ function LandingPageBody() {
         zIndex={0}
       />
 
-      {/* Main content in left + right layout */}
       <HStack
         spacing={12}
         align="center"
         justify="space-between"
         zIndex={1}
         w="full"
-        maxW="7xl"
+        maxW="3xl"
       >
-        {/* Left Side - Text Content */}
         <VStack
           spacing={{ base: 6, md: 8 }}
           align="flex-start"
@@ -81,7 +78,6 @@ function LandingPageBody() {
           textAlign="left"
           flex="1"
         >
-          {/* Title */}
           <Text
             as="h1"
             fontSize={{ base: "3xl", sm: "5xl", md: "6xl", lg: "7xl" }}
@@ -103,7 +99,6 @@ function LandingPageBody() {
             </Box>
           </Text>
 
-          {/* Typewriter Text */}
           <Text
             as="h2"
             fontSize={{ base: "md", sm: "lg", md: "2xl", lg: "3xl" }}
@@ -127,7 +122,6 @@ function LandingPageBody() {
             />
           </Text>
 
-          {/* Button */}
           <Stack
             direction={{ base: "column", sm: "row" }}
             spacing={6}
@@ -153,16 +147,14 @@ function LandingPageBody() {
           </Stack>
         </VStack>
 
-        {/* Right Side - Profile Picture */}
         <Avatar
           size="2xl"
           name={userData.username}
-          src={userData.profilePic || ""}
+          src={userData.pic || ""}
           border="4px solid teal"
         />
       </HStack>
 
-      {/* Floating Animations */}
       <style>
         {`
           @keyframes float1 {
